@@ -1,20 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      <img src="../../assets/logo.svg" width="100" />
     </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button>
+        <ion-icon slot="icon-only" name="settings-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <h1 class="ubuntu">
+      Precios para el {{FechaCorta('2019-06-11T00:00')}}
+    </h1>
+    <div>
+      <ion-button class="botonlista">
+        <ion-icon name="list" class="iconolista"></ion-icon> Lista de preciosa
+      </ion-button>
+    </div>
+    <div class="recuadro" [ngClass]="GetClass(2,4,2)">
+      <p class="titulorecuadro">Precio mas barato</p>
+      <div class="horaypreciorec">
+        <p class="horarecuadro">{{GetHora('2021-06-13T13:00')}}</p>
+        <p class="preciorecuadro"> 21,03€</p>
+      </div>
+      <p class="pierecuadro">Precio medio mínimo último més</p>
+    </div>
+    <div class="recuadro">
+      <p class="titulorecuadro">Precio mas barato de 08:00 a 22:00</p>
+      <div class="horaypreciorec">
+        <p class="horarecuadro">22:00</p>
+        <p class="preciorecuadro">21,03€</p>
+      </div>
+      <p class="pierecuadro">Precio medio mínimo último més</p>
+    </div>
+    <p>Todo el parrafo con la chapa</p>
   </div>
 </ion-content>

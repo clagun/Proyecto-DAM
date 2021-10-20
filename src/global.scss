@@ -24,3 +24,63 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./assets/fonts/Ubuntu-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: bold;
+    src: url('./assets/fonts/Ubuntu-Bold.ttf');
+  }
+
+  @font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: lighter;
+    src: url('./assets/fonts/Ubuntu-Light.ttf');
+  }
+
+h1 {
+    font-weight: bold;
+    font-family:  'Ubuntu' !important;
+}
+
+ion-toolbar {
+    --background: #dedede;
+}
+
+// verde 4caf50
+// azul claro b2c5c6 
+
+.botonlista {
+    font-size: 20px;
+}
+
+.iconolista {
+    padding-right: 15px;
+    font-size: 36px;
+}
+
+
+.rojo {
+    background-color: #CD4765;
+    color: white;
+  }
+  
+  .amarillo {
+    background-color: #F0E459;
+    color: #333;
+  }
+  
+  .verde {
+    background-color: #71bd25;
+    color: black;
+  }
+
+  

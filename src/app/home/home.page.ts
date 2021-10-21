@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {ApireeService} from '../apiree.service';
 
 @Component({
   selector: 'app-home',
@@ -7,28 +8,7 @@ import {Component} from '@angular/core';
 })
 export class HomePage {
 
-  constructor() { }
+  constructor(private apireeService: ApireeService) { }
 
-  FechaCorta(fecha: string): string {
-    var d=new Date(fecha);
-    return d.toLocaleDateString();
-  }
-
-  AnadirCero(i: number): string {
-    var x;
-    if(i<10) {
-      x="0"+i;
-    }
-    else {
-      x=i;
-    }
-    return x;
-  }
-
-  GetHora(fecha: string): string {
-    var d=new Date(fecha);
-    var x=this.AnadirCero(d.getHours())+':'+this.AnadirCero(d.getMinutes())
-    return x;
-  }
 
 }

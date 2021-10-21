@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ApireeService} from '../apiree.service';
 
 @Component({
   selector: 'app-listado',
@@ -7,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ListadoPage implements OnInit {
 
-  constructor() { }
+  constructor(private apireeService: ApireeService) { }
 
   GetClass(p: number, pMax: number, pMin: number) {
     let porcentage: Number;

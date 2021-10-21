@@ -44,28 +44,30 @@ $base-color: #4caf50;
   align-content: space-between;
   flex-wrap: wrap;
   height: 8em;
-  border: 1px solid #5c5c5c;
   background-color: #dedede;
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
   margin: 5px 7%;
+  box-shadow: rgba(22, 22, 22, 0.479) 3px 3px 5px;
 }
 
 .titulorecuadro, .pierecuadro{
-  padding-left: 8px;
+  padding: 4px 8px;
   text-align: left;
+  font-size: 14px !important;
 }
 
 .titulorecuadro {
   background-color: $base-color;
   color: #fff;
   font-weight: bold;
-  text-shadow: 2px 2px 2px  #2c2c2c;
+  text-shadow: 1px 1px 1px  #2c2c2c;
 }
 
 .pierecuadro {
   background-color: #b2c5c6;
   color: #000;
+  text-align: center;
 }
 
 .horaypreciorec{
@@ -88,6 +90,7 @@ $base-color: #4caf50;
 
 .botonlista {
   font-size: 14px;
+  font-weight: bold;
   width: 84%;
   margin: 0 7%;
   --background: #4caf50;

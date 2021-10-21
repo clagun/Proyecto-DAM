@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <img src="../../assets/logo.svg" width="100" />
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button [routerLink]="['/home']">
+        <ion-icon slot="icon-only" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p class="nota grande">Elige un electrodoméstico de la lista o si lo deseas introduce uno nuevo.</p>
+
+  <div class="recuadro">
+    <ion-item>
+      <ion-label>Electrodoméstico</ion-label>
+      <ion-select value="objeto1" okText="aceptar" cancelText="cancelar">
+        <ion-select-option value="objeto1">Lavadora 60º (659wh)</ion-select-option>
+        <ion-select-option value="objeto2">Lavadora 40º (435wh)</ion-select-option>
+        <ion-select-option value="objeto3">Secadora (335wh)</ion-select-option>
+        <ion-select-option value="objeto4">Lavavajillas (335wh)</ion-select-option>
+        <ion-select-option value="objeto5">Horno 150º (335wh)</ion-select-option>
+        <ion-select-option value="objeto6">Horno 180º (435wh)</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <p class="nuevoelectro"><strong>Nuevo electrodoméstico</strong></p>
+
+  <div class="recuadro">
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+      <ion-input placeholder="Introducir nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Consumo</ion-label>
+      <ion-input placeholder="Introducir consumo kWh"></ion-input>
+    </ion-item>
+
+    <ion-button size="small">CREAR</ion-button>
+  </div>
+
+  <p class="nota">Tienes que introducir el consumo del electrodoméstico para el programa que uses avitualmente. El
+    consumo se introduce en Wh. Si no conoces el dato hay enchufes que te marcan el consumo.</p>
+
+
+</ion-content>

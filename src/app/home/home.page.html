@@ -4,7 +4,7 @@
       <img src="../../assets/logo.svg" width="100" />
     </ion-title>
     <ion-buttons slot="secondary">
-      <ion-button>
+      <ion-button [routerLink]="['/configuracion']">
         <ion-icon slot="icon-only" name="settings-sharp"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -14,30 +14,32 @@
 <ion-content [fullscreen]="true">
 
   <div id="container">
-    <h1 class="ubuntu">
+    <h1>
       Precios para el {{FechaCorta('2019-06-11T00:00')}}
     </h1>
     <div>
-      <ion-button class="botonlista">
-        <ion-icon name="list" class="iconolista"></ion-icon> Lista de preciosa
+      <ion-button class="botonlista" [routerLink]="['/listado']">
+        <ion-icon name="list" class="iconolista"></ion-icon> Lista de precios
       </ion-button>
     </div>
-    <div class="recuadro" [ngClass]="GetClass(2,4,2)">
+    <div class="recuadro">
       <p class="titulorecuadro">Precio mas barato</p>
       <div class="horaypreciorec">
         <p class="horarecuadro">{{GetHora('2021-06-13T13:00')}}</p>
-        <p class="preciorecuadro"> 21,03€</p>
+        <p class="preciorecuadro"> 0,19€</p>
       </div>
-      <p class="pierecuadro">Precio medio mínimo último més</p>
+      <p class="pierecuadro">Precio medio mínimo último més <strong>0,21€</strong></p>
     </div>
     <div class="recuadro">
       <p class="titulorecuadro">Precio mas barato de 08:00 a 22:00</p>
       <div class="horaypreciorec">
         <p class="horarecuadro">22:00</p>
-        <p class="preciorecuadro">21,03€</p>
+        <p class="preciorecuadro">0,24€</p>
       </div>
-      <p class="pierecuadro">Precio medio mínimo último més</p>
+      <p class="pierecuadro">Precio medio mínimo último més <strong>0,25€</strong></p>
     </div>
-    <p>Todo el parrafo con la chapa</p>
+    <p class="nota">Los precios se actualizan a las 21:00. El precio que se muestra, es el coste de la electricidad
+      por el consumo del programa del electrodoméstico seleccionado. En los ajustes puedes escoger entre distintos
+      electrodomésticos o crear uno a tu medida.</p>
   </div>
 </ion-content>

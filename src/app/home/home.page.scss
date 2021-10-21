@@ -1,3 +1,5 @@
+$base-color: #4caf50;
+
 #container {
   text-align: center;
   display: flex;
@@ -11,12 +13,10 @@
 
 #container p, #container div, h1 {
   width: 100%;
-  margin: 5%;
 }
 
 #container p {
   font-size: 16px;
-  line-height: 22px;
   margin: 0;
 }
 
@@ -44,10 +44,11 @@
   align-content: space-between;
   flex-wrap: wrap;
   height: 8em;
-  border: 2px solid #dedede;
+  border: 1px solid #5c5c5c;
   background-color: #dedede;
   border-radius: 10px;
   overflow: hidden;
+  margin: 5px 7%;
 }
 
 .titulorecuadro, .pierecuadro{
@@ -56,9 +57,10 @@
 }
 
 .titulorecuadro {
-  background-color: #4caf50;
+  background-color: $base-color;
   color: #fff;
   font-weight: bold;
+  text-shadow: 2px 2px 2px  #2c2c2c;
 }
 
 .pierecuadro {
@@ -80,6 +82,18 @@
 }
 
 .preciorecuadro {
-  color: #71bd25;
+  color: $base-color;
   text-shadow: #333 2px 2px;
+}
+
+.botonlista {
+  font-size: 14px;
+  width: 84%;
+  margin: 0 7%;
+  --background: #4caf50;
+}
+
+.iconolista {
+  padding-right: 15px;
+  font-size: 30px;
 }

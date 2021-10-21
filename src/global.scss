@@ -49,38 +49,31 @@
 h1 {
     font-weight: bold;
     font-family:  'Ubuntu' !important;
+    color: #fff;
+    text-shadow: 3px 3px 2px  #2c2c2c;
+    margin-top: 5px;
 }
 
 ion-toolbar {
     --background: #dedede;
 }
 
-// verde 4caf50
-// azul claro b2c5c6 
-
-.botonlista {
-    font-size: 20px;
+ion-content {
+  --background:  #fff url("./assets/fondo.jpg") no-repeat center center / cover;
 }
 
-.iconolista {
-    padding-right: 15px;
-    font-size: 36px;
-}
+  .nota{
+    font-size: 13px !important;
+    line-height: 13x !important;
+    padding: 5px 5%;
+    text-align: left;
+    color: #fff;
+    text-shadow: 2px 2px 1px #000;
+  }
 
+  .grande {
+    font-size: 18px !important;
+  }
 
-.rojo {
-    background-color: #CD4765;
-    color: white;
-  }
-  
-  .amarillo {
-    background-color: #F0E459;
-    color: #333;
-  }
-  
-  .verde {
-    background-color: #71bd25;
-    color: black;
-  }
 
   

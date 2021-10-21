@@ -7,20 +7,7 @@ import {Component} from '@angular/core';
 })
 export class HomePage {
 
-
-
   constructor() { }
-
-  GetClass(p: number, pMax: number, pMin: number) {
-    let porcentage: Number;
-    porcentage=(p-pMin)*100/(pMax-pMin);
-    if(porcentage>75)
-      return 'rojo';
-    else if(porcentage>25)
-      return 'amarillo';
-    else
-      return 'verde';
-  }
 
   FechaCorta(fecha: string): string {
     var d=new Date(fecha);

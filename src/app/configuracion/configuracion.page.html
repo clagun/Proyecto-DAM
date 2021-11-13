@@ -15,35 +15,37 @@
   <p class="nota grande">Elige un electrodoméstico de la lista o si lo deseas introduce uno nuevo.</p>
 
   <div class="recuadro">
-    <ion-item>
-      <ion-label>Electrodoméstico</ion-label>
-      <ion-select value="objeto1" okText="aceptar" cancelText="cancelar">
-        <ion-select-option value="objeto1">Lavadora 60º (659wh)</ion-select-option>
-        <ion-select-option value="objeto2">Lavadora 40º (435wh)</ion-select-option>
-        <ion-select-option value="objeto3">Secadora (335wh)</ion-select-option>
-        <ion-select-option value="objeto4">Lavavajillas (335wh)</ion-select-option>
-        <ion-select-option value="objeto5">Horno 150º (335wh)</ion-select-option>
-        <ion-select-option value="objeto6">Horno 180º (435wh)</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ion-list>    
+      <ion-item>
+        <ion-label>Electrodoméstico</ion-label>
+        <ion-select okText="aceptar" cancelText="cancelar" [(ngModel)]="itemSeleccionado">
+        <ion-select-option *ngFor="let electroJson of electrodomesticosJson" [value]="electroJson">{{electroJson.nombre + ' (' + electroJson.consumo + 'wh)'}}</ion-select-option>
+        <ion-select-option *ngFor="let electroUsuario of electrodomesticos" [value]="electroUsuario">{{electroUsuario.nombre + ' (' + electroUsuario.consumo + 'wh)'}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-button size="small" (click)="guardarOpcionConfig()"class="btnCrear">GUARDAR</ion-button>
+    <ion-button size="small" (click)="eliminarElectro()"class="btnCrear">BORRAR</ion-button>
   </div>
 
   <p class="nuevoelectro"><strong>Nuevo electrodoméstico</strong></p>
 
   <div class="recuadro">
+    <form [formGroup]="formulario" (ngSubmit)="guardarElectro(formulario.value)">
     <ion-item>
       <ion-label>Nombre</ion-label>
-      <ion-input placeholder="Introducir nombre"></ion-input>
+      <ion-input placeholder="Introducir nombre" formControlName="nombre"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Consumo</ion-label>
-      <ion-input placeholder="Introducir consumo kWh"></ion-input>
+      <ion-input placeholder="Introducir consumo Wh" formControlName="consumo" type="number"></ion-input>
     </ion-item>
 
-    <ion-button size="small" class="btnCrear">CREAR</ion-button>
+    <ion-button size="small" class="btnCrear" [disabled]="!formulario.valid" type="submit">CREAR</ion-button>
+  </form>
 
-    <p class="notaformu">Tienes que introducir el consumo del electrodoméstico para el programa que uses avitualmente.
+    <p class="notaformu">Tienes que introducir el consumo del electrodoméstico para el programa que uses habitualmente.
       El
       consumo se introduce en Wh. Si no conoces el dato hay enchufes que te marcan el consumo.</p>
   </div>

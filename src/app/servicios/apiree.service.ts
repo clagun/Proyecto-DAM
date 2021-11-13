@@ -1,4 +1,4 @@
-import {ErrorHandler, Injectable} from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -45,7 +45,6 @@ export class ApireeService {
       } else {
         this.horas.push(i + ":00");
       }
-
     }
   }
   

@@ -10,13 +10,12 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!-- Realiza un for que muestra un div por elemento del array y precio/hora. El ngClass coge los valores .scss dependiendo del String devuelto. -->
 <ion-content>
   <div id="listado">
-    <div class="cuadro" *ngFor="let precio of this.precios; let i = index">
-      <ion-icon name="ellipse" [ngClass]="GetClass(precio)"></ion-icon> <span
-        class="dif">{{apireeService.horas[i]}}</span>
-        {{precio | number: '1.2-2'}}€
-    </div>
+      <div class="cuadro" *ngFor="let precio of this.precios; let i = index">
+        <ion-icon name="ellipse" [ngClass]="GetClass(precio)"></ion-icon> <span
+          class="dif">{{apireeService.horas[i]}}</span>
+          {{precio | number: '1.2-2'}}€
+        </div>
   </div>
 </ion-content>

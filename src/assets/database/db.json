@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "nombre": "Lavadora 60º",
+      "consumo": 659,
+      "editable": false
+    },
+    {
+      "id": 2,
+      "nombre": "Lavadora 40º",
+      "consumo": 455,
+      "editable": false
+    },
+    {
+      "id": 3,
+      "nombre": "Secadora",
+      "consumo": 355,
+      "editable": false
+    },
+    {
+      "id": 4,
+      "nombre": "Lavavajillas",
+      "consumo": 400,
+      "editable": false
+    },
+    {
+      "id": 5,
+      "nombre": "Horno 150º",
+      "consumo": 535,
+      "editable": false
+    },
+   {
+      "id": 6,
+      "nombre": "Horno 180º",
+      "consumo": 735,
+      "editable": false
+    }
+  ]
+}

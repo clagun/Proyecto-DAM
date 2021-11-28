@@ -11,17 +11,16 @@ declare var cordova: any; // stop TypeScript complaining.
 })
 export class HomePage {
   items: Observable<any>;
-  homePrecios: Array<any>=[];
+  precios: Array<any>=[];
   horas: Array<any>=[];
   timeArr: Array<string>=[];
 
-  minArr: any;
-  hora: any;
-  minimoPrecioEntre: any;
-  horaPrecioMasBarato: any;
-  tiempoMasBaratoEntre: any;
+  precioMin: any;
+  horaMin: any;
+  precioMinEntre: any;
+  horaMinEntre: any;
 
-  electrodomesticoUsuario: any;
+  electrodomestico: any;
 
   constructor(private apireeService: ApireeService) {
     this.GetAPIPrecio();
@@ -35,34 +34,34 @@ export class HomePage {
 
       for(let i=0; i<data.indicator.values.length; i++) {
 
-        this.homePrecios.push(data.indicator.values[i].value/1000);
+        this.precios.push(data.indicator.values[i].value/1000);
         this.horas.push(data.indicator.values[i].datetime);
       }
 
-      this.minArr=Math.min.apply(Math, this.homePrecios);
-      var index=this.homePrecios.indexOf(this.minArr);
+      this.precioMin=Math.min.apply(Math, this.precios);
+      var index=this.precios.indexOf(this.precioMin);
 
       //Realiza un split de la fecha desde la T (2021-10-16T21:00:00.000+02:00) entonces almacena solo el tiempo.
       var tiempo=this.horas[index].split("T")[1];
       //Realiza un slice que quita el sobrante de la hora (segundos y cambio de hora) 21:00:00.000+02:00
-      this.hora=tiempo.slice(0, 5);
+      this.horaMin=tiempo.slice(0, 5);
 
-      this.minimoPrecioEntre=this.homePrecios[8];
-      this.tiempoMasBaratoEntre=this.horas[0];
+      this.precioMinEntre=this.precios[8];
+      this.horaMinEntre=this.horas[0];
 
 
       for(let i=8; i<=22; i++) {
 
-        if(this.homePrecios[i]<this.minimoPrecioEntre) {
+        if(this.precios[i]<this.precioMinEntre) {
 
-          this.minimoPrecioEntre=this.homePrecios[i];
-          this.tiempoMasBaratoEntre=this.horas[i];
+          this.precioMinEntre=this.precios[i];
+          this.horaMinEntre=this.horas[i];
 
         }
       }
 
-      this.tiempoMasBaratoEntre=this.tiempoMasBaratoEntre.split("T")[1];
-      this.tiempoMasBaratoEntre=this.tiempoMasBaratoEntre.slice(0, 5);
+      this.horaMinEntre=this.horaMinEntre.split("T")[1];
+      this.horaMinEntre=this.horaMinEntre.slice(0, 5);
 
       //si hay datos guardados en el local storage con la clave data, se ejecuta el método
       if(localStorage.getItem('data')) {
@@ -77,11 +76,11 @@ export class HomePage {
 
     // esperamos a que this.hora este definido
     (async () => {
-      while(this.hora===undefined)
+      while(this.horaMin===undefined)
         await new Promise(resolve => setTimeout(resolve, 1000));
       // formateamos el precio a dos decimales  
-      var precio=Number((Math.abs(this.minArr)*100).toPrecision(15));
-      precio=Math.round(precio)/100*Math.sign(this.minArr);
+      var precio=Number((Math.abs(this.precioMin)*100).toPrecision(15));
+      precio=Math.round(precio)/100*Math.sign(this.precioMin);
       // lanzamos la notificación
       cordova.plugins.notification.local.schedule({
         id: 1,
@@ -89,7 +88,7 @@ export class HomePage {
         icon: "res://icon",
         color: '4caf50',
         title: "El precio más barato de mañana",
-        text: "Hora: "+this.hora+" Precio: "+precio+"€",
+        text: "Hora: "+this.horaMin+" Precio: "+precio+"€",
         trigger: {every: {hour: 20, minute: 10}, count: 365},
         foreground: true
       });
@@ -101,8 +100,8 @@ export class HomePage {
    se calcula los precios mnimos del electrodoméstico seleccionado*/
   getPreciosHomeLocal() {
     //toma los datos del local storage, se parsea el json y se guarda lo obtenido
-    this.electrodomesticoUsuario=JSON.parse(localStorage.getItem('data'));
-    this.minimoPrecioEntre=(this.electrodomesticoUsuario.consumo/1000)*this.minimoPrecioEntre;
-    this.minArr=(this.electrodomesticoUsuario.consumo/1000)*this.minArr;
+    this.electrodomestico=JSON.parse(localStorage.getItem('data'));
+    this.precioMinEntre=(this.electrodomestico.consumo/1000)*this.precioMinEntre;
+    this.precioMin=(this.electrodomestico.consumo/1000)*this.precioMin;
   }
 }

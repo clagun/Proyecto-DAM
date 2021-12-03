@@ -12,7 +12,15 @@ export class ApireeService {
   items: Observable<any>
   horas: Array<any>=[];
 
+    //Coge la fecha y luego coge el dia, mes y año, los guarda en un String y los pasa al url para la API.
+    fechaHoy = new Date();
+    dia = this.fechaHoy.getDate();
+    mes = this.fechaHoy.getMonth() + 1;
+    anio = this.fechaHoy.getFullYear();
+    fechaManianaAPI = this.anio + "-" + this.mes + "-" + (this.dia + 1);
+
   url="https://api.esios.ree.es/indicators/1001?&geo_ids[]=8741&&time_trunc=hour"
+  urldiaSiguiente ="https://api.esios.ree.es/indicators/1001?start_date=" + this.fechaManianaAPI + "T00:00&end_date=" + this.fechaManianaAPI + "T23:59&geo_ids[]=8741"
 
   headers={
     headers: new HttpHeaders({
@@ -27,11 +35,11 @@ export class ApireeService {
   }
 
   //Devuelve la fecha del dia.
-  FechaCorta(): string {
-    //Coge la fecha actual, quita el tiempo y devuelve la fecha solo.
-    var fechaHora=new Date().toLocaleString();
-    var fechaSolo=fechaHora.split(",")[0];
-    return fechaSolo;
+  FechaCorta() :string{
+
+    var fecha = new Date().toLocaleDateString()
+    
+    return fecha
   }
 
   //Realiza el calculo para hacer las horas del dia y las guarda en un array.
@@ -57,6 +65,12 @@ export class ApireeService {
 
   ErrorHandler(error: HttpErrorResponse) {
     return throwError(error.message||console.log('Error de Servidor'));
+  }
+
+  GetAPIDiaSiguiente(): Observable<any> {
+
+    return this.httpClient.get(this.urldiaSiguiente, this.headers).pipe(catchError(this.ErrorHandler));
+
   }
 
 }

@@ -14,9 +14,13 @@ export class HomePage {
   precios: Array<any>=[];
   horas: Array<any>=[];
   timeArr: Array<string>=[];
+  preciosmaniana: Array<any>=[];
+  horasmaniana: Array<any>=[];
 
   precioMin: any;
+  precioMinManiana: any;
   horaMin: any;
+  horaMinManiana: any;
   precioMinEntre: any;
   horaMinEntre: any;
 
@@ -36,6 +40,7 @@ export class HomePage {
 
         this.precios.push(data.indicator.values[i].value/1000);
         this.horas.push(data.indicator.values[i].datetime);
+
       }
 
       this.precioMin=Math.min.apply(Math, this.precios);
@@ -70,17 +75,46 @@ export class HomePage {
     });
   }
 
+  //Realiza la subscripción al API, coge los precios y horas y los guarda en un array, coge el precio mas barato y hora para el dia siguiente
+ GetAPIPrecioManiana() {
+
+  this.apireeService.GetAPIDiaSiguiente().subscribe(data => {
+    this.items = data.indicator.values;
+
+    for(let i = 0; i < data.indicator.values.length; i++) {
+
+     this.preciosmaniana.push(data.indicator.values[i].value/1000);
+     
+     this.horasmaniana.push(data.indicator.values[i].datetime);     
+
+    }
+    
+    //Almacena el precio minimo del dia
+   this.precioMinManiana = Math.min.apply(Math, this.preciosmaniana);
+
+   //Almacena el indice del precio minimo
+   var minIndex = this.preciosmaniana.indexOf(this.precioMinManiana);
+
+   //Almacena el datetime del precio minimo  quita la hora
+   this.horaMinManiana = this.horasmaniana[minIndex].split("T")[1].slice(0, 5);
+
+  });
+ }
+
   //Se ejecuta cuando entra en una página (antes de ser cargada), actualiza datos precios
   ionViewWillEnter() {
     this.GetAPIPrecio();
+    this.GetAPIPrecioManiana();
 
-    // esperamos a que this.hora este definido
+    // esperamos a que this.precioMinManiana este definido
     (async () => {
-      while(this.horaMin===undefined)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      while(this.precioMinManiana===undefined)
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
       // formateamos el precio a dos decimales  
-      var precio=Number((Math.abs(this.precioMin)*100).toPrecision(15));
-      precio=Math.round(precio)/100*Math.sign(this.precioMin);
+      var precio=Number((Math.abs(this.precioMinManiana)*100).toPrecision(15));
+      precio=Math.round(precio)/100*Math.sign(this.precioMinManiana);
+
       // lanzamos la notificación
       cordova.plugins.notification.local.schedule({
         id: 1,
@@ -88,8 +122,8 @@ export class HomePage {
         icon: "res://icon",
         color: '4caf50',
         title: "El precio más barato de mañana",
-        text: "Hora: "+this.horaMin+" Precio: "+precio+"€",
-        trigger: {every: {hour: 20, minute: 10}, count: 365},
+        text: "Hora: "+this.horaMinManiana+" Precio: "+precio+"€",
+        trigger: {every: {hour: 21, minute: 45}, count: 365},
         foreground: true
       });
     })();

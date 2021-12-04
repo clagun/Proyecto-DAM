@@ -97,7 +97,7 @@ export class HomePage {
 
    //Almacena el datetime del precio minimo  quita la hora
    this.horaMinManiana = this.horasmaniana[minIndex].split("T")[1].slice(0, 5);
-
+  
   });
  }
 
@@ -109,7 +109,7 @@ export class HomePage {
     // esperamos a que this.precioMinManiana este definido
     (async () => {
       while(this.precioMinManiana===undefined)
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 1000));
 
       // formateamos el precio a dos decimales  
       var precio=Number((Math.abs(this.precioMinManiana)*100).toPrecision(15));

@@ -108,7 +108,7 @@ export class HomePage {
 
     // esperamos a que this.precioMinManiana este definido
     (async () => {
-      while(this.precioMinManiana===undefined)
+      while(this.horaMinManiana===undefined)
         await new Promise(resolve => setTimeout(resolve, 1000));
 
       // formateamos el precio a dos decimales  

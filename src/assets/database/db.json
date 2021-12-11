@@ -2,39 +2,33 @@
   "data": [
     {
       "id": 1,
-      "nombre": "Lavadora 60º",
-      "consumo": 659,
-      "editable": false
+      "nombre": "Lavadora 40º-60º Eco",
+      "consumo": 727
     },
     {
       "id": 2,
-      "nombre": "Lavadora 40º",
-      "consumo": 455,
-      "editable": false
+      "nombre": "Lavavajillas modo Eco",
+      "consumo": 860
     },
     {
       "id": 3,
-      "nombre": "Secadora",
-      "consumo": 355,
-      "editable": false
+      "nombre": "Horno hidrolítico",
+      "consumo": 970
     },
     {
       "id": 4,
-      "nombre": "Lavavajillas",
-      "consumo": 400,
-      "editable": false
+      "nombre": "Horno pirolítico",
+      "consumo": 3000
     },
     {
       "id": 5,
-      "nombre": "Horno 150º",
-      "consumo": 535,
-      "editable": false
+      "nombre": "Secadora",
+      "consumo": 1900
     },
    {
       "id": 6,
-      "nombre": "Horno 180º",
-      "consumo": 735,
-      "editable": false
+      "nombre": "Aspirador",
+      "consumo": 550
     }
   ]
 }

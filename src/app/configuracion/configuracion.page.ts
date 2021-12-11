@@ -12,11 +12,11 @@ import { Electromestico, StorageService } from '../servicios/storage.service';
 })
 export class ConfiguracionPage implements OnInit {
 
-  electrodomesticosJson: any[];
-  itemSeleccionado: any;
+  itemSelecConfig: any;
+  itemSelecEliminar: any;
 
+  electrodomesticosJson: Electromestico[];
   electrodomesticos: Electromestico[] = [];
-
   nuevoElectrodomestico: Electromestico = <Electromestico>{};
 
   formulario;
@@ -25,16 +25,20 @@ export class ConfiguracionPage implements OnInit {
     //formulario para que el usuario pueda guardar la opción de nuevo electrodoméstico
     this.formulario = this.form.group({
       'nombre': ["",Validators.compose([Validators.maxLength(25),Validators.pattern(""), Validators.minLength(1), Validators.required])],
-      'consumo':["",Validators.compose([Validators.minLength(1), Validators.required])],
-      'editable':[true],
+      'consumo':["",Validators.compose([Validators.minLength(1), Validators.required])]
     });//items de los usuarios almacenados en el storage
       this.cargarItems();  
    }
 
-   //Realiza la subscripción, se guarda los valores obtenidos de la lista del Json en una variable
-  ngOnInit() {
-    this.getJsonData().subscribe(data =>{
-      this.electrodomesticosJson = data;
+   //Si el storage no está creado (false), se realiza la subscripción y se guarda los valores obtenidos de la lista del Json 
+   ngOnInit() {
+    this.storage.comprobarStorage().then(() => {
+      if(!this.storage.storageCreado) {
+        this.getJsonData().subscribe(data =>{
+          this.electrodomesticosJson = data;
+          this.guardarElectroJson();
+        });
+      }
     });
   }
 
@@ -49,16 +53,18 @@ export class ConfiguracionPage implements OnInit {
       )
   }
 
+  //se añaden los electrodomésticos del json al storage y se cargan todos los items
+  guardarElectroJson(){
+    this.storage.addItemsJson(this.electrodomesticosJson).then(item => {
+     this.cargarItems();
+    });
+  }
+
   //guarda en el local storage los datos de la opción seleccionada de la lista 
   guardarOpcionConfig(){
-    //si se ha elegido una opción, se guarda los valores y se vuelve a la página home
-    if(this.itemSeleccionado != null) {
-      localStorage.setItem('data', JSON.stringify(this.itemSeleccionado));
+    //Se guarda los valores y se vuelve a la página home
+      localStorage.setItem('data', JSON.stringify(this.itemSelecConfig));
       this.nav.navigateRoot('home');
-    } //si no se elige ninguna opción sale una alerta
-    else  {
-      this.alerta('Elige un electrodoméstico de la lista');
-    }
   } 
 
   //se obtienen los electrodomésticos del storage
@@ -68,26 +74,22 @@ export class ConfiguracionPage implements OnInit {
     });
   }
 
-  //elimina un electrodoméstico de la lista (solo los introducidos por los usuarios)
+  //elimina un electrodoméstico de la lista 
   eliminarElectro(){
-    if(this.itemSeleccionado != null)
-    //los electrodomésticos de los usuarios del Json están en false
-      if(this.itemSeleccionado.editable != false) {
-        this.storage.eliminarItem(this.itemSeleccionado.id).then(item => {
+        this.storage.eliminarItem(this.itemSelecEliminar.id).then(item => {
           this.toast('Electrodoméstico eliminado');
           this.cargarItems();
-          this.itemSeleccionado = null;
-        });
-      }
-      else {
-        this.alerta('No se puede eliminar este electrodoméstico.');
-    }
+        }); 
+        //borra el localstorage si coincide con el electrodoméstico eliminado 
+       let electroLocalStorage =  JSON.parse(localStorage.getItem('data'));
+       if(electroLocalStorage != null)
+       if(electroLocalStorage.id === this.itemSelecEliminar.id) localStorage.removeItem('data');       
   }
 
   //se le pasa un value (de los datos del formulario) y se añade al storage
   guardarElectro(value){
     this.nuevoElectrodomestico = value;
-    this.nuevoElectrodomestico.id = Date.now(); this.nuevoElectrodomestico.editable = true;
+    this.nuevoElectrodomestico.id = Date.now();
     this.storage.addItem(this.nuevoElectrodomestico).then(item => {
       this.toast('Electrodoméstico añadido');
       this.cargarItems();

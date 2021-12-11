@@ -37,7 +37,7 @@ export class ApireeService {
   //Devuelve la fecha del dia.
   FechaCorta() :string{
 
-    var fecha = new Date().toLocaleDateString()
+    var fecha = new Date().toLocaleDateString('es-ES')
     
     return fecha
   }

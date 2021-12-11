@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ApireeService} from '../servicios/apiree.service';
 import {Observable} from 'rxjs';
+
+import { IonRouterOutlet, Platform } from '@ionic/angular';
 
 declare var cordova: any; // stop TypeScript complaining.
 
@@ -26,8 +28,14 @@ export class HomePage {
 
   electrodomestico: any;
 
-  constructor(private apireeService: ApireeService) {
+  constructor(private apireeService: ApireeService, private platform: Platform, private routerOutlet: IonRouterOutlet) {
     this.GetAPIPrecio();
+    //se añade función de salir de la app, al dar botón atrás del hardware
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      if (!this.routerOutlet.canGoBack()) {
+        navigator['app'].exitApp();
+      }
+    });
   }
 
   //Realiza la subscripción al API, coge los precios y horas y los guarda en un array, coge el precio mas barato y la hora.
@@ -57,7 +65,7 @@ export class HomePage {
 
       for(let i=8; i<=22; i++) {
 
-        if(this.precios[i]<this.precioMinEntre) {
+        if(this.precios[i]<=this.precioMinEntre) {
 
           this.precioMinEntre=this.precios[i];
           this.horaMinEntre=this.horas[i];
@@ -108,7 +116,7 @@ export class HomePage {
 
     // esperamos a que this.precioMinManiana este definido
     (async () => {
-      while(this.horaMinManiana===undefined)
+      while(this.precioMinManiana===undefined)
         await new Promise(resolve => setTimeout(resolve, 1000));
 
       // formateamos el precio a dos decimales  
@@ -131,11 +139,11 @@ export class HomePage {
 
 
   /* obtiene los valores del local storage y con los precios de la api
-   se calcula los precios mnimos del electrodoméstico seleccionado*/
+   se calcula los precios mínimos del electrodoméstico seleccionado, se añade 10% impuestos*/
   getPreciosHomeLocal() {
     //toma los datos del local storage, se parsea el json y se guarda lo obtenido
     this.electrodomestico=JSON.parse(localStorage.getItem('data'));
-    this.precioMinEntre=(this.electrodomestico.consumo/1000)*this.precioMinEntre;
-    this.precioMin=(this.electrodomestico.consumo/1000)*this.precioMin;
+    this.precioMinEntre=(this.electrodomestico.consumo/1000)*this.precioMinEntre*1.10;
+    this.precioMin=(this.electrodomestico.consumo/1000)*this.precioMin*1.10;
   }
 }

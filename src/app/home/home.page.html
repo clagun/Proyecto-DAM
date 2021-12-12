@@ -36,6 +36,8 @@
         <p class="horarecuadro">{{horaMinEntre}}</p>
         <p class="preciorecuadro">{{this.precioMinEntre | number: '1.2-2'}}€</p>
       </div>
+      <ion-button class="botonlista" [routerLink]="['/charts']">Ver precios promedios del mes
+      </ion-button>
       <p class="pierecuadro">Precio medio máximo último més <strong>{{preciomax15dias| number: '1.2-2'}}€/ kWh</strong></p>
       <p class="pierecuadro">Precio medio mínimo último més <strong>{{preciomin15dias| number: '1.2-2'}}€/ kWh</strong></p>
     </div>

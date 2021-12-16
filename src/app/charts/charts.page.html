@@ -1,18 +1,22 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Precio promedio último mes</ion-title>
+    <ion-title>
+      <img src="../../assets/logo.svg" width="100" />
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button [routerLink]="['/home']">
+        <ion-icon slot="icon-only" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="ion-padding">
-        
+    <h1>Evolución de precios último mes</h1>
     <ion-card>
-      <ion-card-header>
-      Precio mW/hora promedio por fecha
-      </ion-card-header>
       <ion-card-content>
-        <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+        <canvas #lineCanvas style="position: relative; height:60vh"></canvas>
       </ion-card-content>
     </ion-card>
   </div>

@@ -19,28 +19,48 @@
     </h1>
     <div>
       <ion-button class="botonlista" [routerLink]="['/listado']">
-        <ion-icon name="list" class="iconolista"></ion-icon> Lista de precios
+        <ion-icon name="list" class="iconolista"></ion-icon> Lista
+      </ion-button>
+      <ion-button class="botonlista" [routerLink]="['/charts']">
+        <ion-icon name="analytics-outline" class="iconolista"></ion-icon> Evolución
+      </ion-button>
+      <ion-button class="botonlista" [routerLink]="['/charts']">
+        <ion-icon name="calendar-outline" class="iconolista"></ion-icon> Hoy
       </ion-button>
     </div>
     <div class="recuadro">
-      <p class="titulorecuadro">Precio mas barato para: {{nombreelectro}}</p>
+      <p class="titulorecuadro">Precio mas barato</p>
       <div class="horaypreciorec">
         <p class="horarecuadro">{{horaMin}}</p>
         <p class="preciorecuadro">{{this.precioMin | number: '1.2-2'}}€</p>
       </div>
-      <p class="pierecuadro">Precio promedio por día desde {{apiaverage.fechaString()}} es: <strong> {{preciopromedio15dias| number: '1.2-2'}}€/ kWh</strong></p>
+      <p class="pierecuadro">Electrodoméstico <strong>{{nombreelectro}}</strong></p>
     </div>
+
+
     <div class="recuadro">
       <p class="titulorecuadro">Precio mas barato de 08:00 a 22:00</p>
       <div class="horaypreciorec">
         <p class="horarecuadro">{{horaMinEntre}}</p>
         <p class="preciorecuadro">{{this.precioMinEntre | number: '1.2-2'}}€</p>
       </div>
-      <ion-button class="botonlista" [routerLink]="['/charts']">Ver precios promedios del mes
-      </ion-button>
-      <p class="pierecuadro">Precio medio máximo último més <strong>{{preciomax15dias| number: '1.2-2'}}€/ kWh</strong></p>
-      <p class="pierecuadro">Precio medio mínimo último més <strong>{{preciomin15dias| number: '1.2-2'}}€/ kWh</strong></p>
+      <p class="pierecuadro">Electrodoméstico <strong>{{nombreelectro}}</strong></p>
+
     </div>
+
+    <div class="recuadro peq">
+      <p class="titulorecuadro">Precio medios último mes</p>
+      <div class="preciosmes">
+        <div class="gris">Mín.</div>
+        <div class="gris">Máx.</div>
+        <div class="gris">Med.</div>
+        <div><strong>{{preciomin15dias| number: '1.2-2'}}€</strong></div>
+        <div><strong>{{preciomax15dias| number: '1.2-2'}}€</strong></div>
+        <div><strong>{{preciopromedio15dias| number: '1.2-2'}}€</strong></div>
+      </div>
+    </div>
+
+
     <p class="nota">Los precios se actualizan a las 21:00. El precio que se muestra, es el coste de la electricidad
       por el consumo del programa del electrodoméstico seleccionado. En los ajustes puedes escoger entre distintos
       electrodomésticos o crear uno a tu medida.</p>

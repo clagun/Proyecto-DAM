@@ -43,7 +43,7 @@ $base-color: #4caf50;
   display: flex;
   align-content: space-between;
   flex-wrap: wrap;
-  height: 8em;
+  height: 6em;
   background-color: #dedede;
   border-radius: 5px;
   overflow: hidden;
@@ -95,12 +95,34 @@ $base-color: #4caf50;
 .botonlista {
   font-size: 14px;
   font-weight: bold;
-  width: 84%;
-  margin: 0 7%;
+  width: 45%;
+  margin: 5px;
   --background: #4caf50;
 }
 
 .iconolista {
-  padding-right: 15px;
-  font-size: 30px;
+  padding-right: 5px;
+  font-size: 20px;
+}
+
+.preciosmes {
+  font-size: 20px !important;
+  font-weight: bold;
+  font-family: 'Ubuntu' !important;
+  display: flex;
+  justify-content: space-around;
+  align-content: space-between;
+  flex-wrap: wrap;
+}
+
+.preciosmes div{
+  width: 30% !important;
+}
+
+.peq{
+  height: 5em;
+}
+
+.gris {
+  color: #666;
 }

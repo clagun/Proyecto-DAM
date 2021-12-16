@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { ApireeService } from '../servicios/apiree.service';
-import { Observable } from 'rxjs';
-import { ApiaverageService } from '../servicios/apiaverage.service';
+import {Component} from '@angular/core';
+import {ApireeService} from '../servicios/apiree.service';
+import {Observable} from 'rxjs';
+import {ApiaverageService} from '../servicios/apiaverage.service';
 
-import { IonRouterOutlet, Platform } from '@ionic/angular';
+import {IonRouterOutlet, Platform} from '@ionic/angular';
 
 declare var cordova: any; // stop TypeScript complaining.
 
@@ -15,13 +15,13 @@ declare var cordova: any; // stop TypeScript complaining.
 export class HomePage {
   items: Observable<any>;
   valorMedio: Observable<any>;
-  precios: Array<any> = [];
-  horas: Array<any> = [];
-  timeArr: Array<string> = [];
-  preciosmaniana: Array<any> = [];
-  horasmaniana: Array<any> = [];
-  preciopromedioDiario: Array<any> = [];
-  fechasDatos: Array<any> = [];
+  precios: Array<any>=[];
+  horas: Array<any>=[];
+  timeArr: Array<string>=[];
+  preciosmaniana: Array<any>=[];
+  horasmaniana: Array<any>=[];
+  preciopromedioDiario: Array<any>=[];
+  fechasDatos: Array<any>=[];
 
   precioMin: any;
   precioMinManiana: any;
@@ -37,16 +37,15 @@ export class HomePage {
   nombreelectro: any;
 
   constructor(private apireeService: ApireeService,
-              private apiaverage: ApiaverageService,
-              private platform: Platform,
-              private routerOutlet: IonRouterOutlet) 
-  {
+    private apiaverage: ApiaverageService,
+    private platform: Platform,
+    private routerOutlet: IonRouterOutlet) {
     this.GetAPIPrecio();
     this.GetPrecioMedio();
 
     //se añade función de salir de la app, al dar botón atrás del hardware
     this.platform.backButton.subscribeWithPriority(-1, () => {
-      if (!this.routerOutlet.canGoBack()) {
+      if(!this.routerOutlet.canGoBack()) {
         navigator['app'].exitApp();
       }
     });
@@ -56,42 +55,42 @@ export class HomePage {
   GetAPIPrecio() {
 
     this.apireeService.GetAPI().subscribe(data => {
-      this.items = data.indicator.values;
+      this.items=data.indicator.values;
 
-      for (let i = 0; i < data.indicator.values.length; i++) {
+      for(let i=0; i<data.indicator.values.length; i++) {
 
-        this.precios.push(data.indicator.values[i].value / 1000);
+        this.precios.push(data.indicator.values[i].value/1000);
         this.horas.push(data.indicator.values[i].datetime);
 
       }
 
-      this.precioMin = Math.min.apply(Math, this.precios);
-      var index = this.precios.indexOf(this.precioMin);
+      this.precioMin=Math.min.apply(Math, this.precios);
+      var index=this.precios.indexOf(this.precioMin);
 
       //Realiza un split de la fecha desde la T (2021-10-16T21:00:00.000+02:00) entonces almacena solo el tiempo.
-      var tiempo = this.horas[index].split("T")[1];
+      var tiempo=this.horas[index].split("T")[1];
       //Realiza un slice que quita el sobrante de la hora (segundos y cambio de hora) 21:00:00.000+02:00
-      this.horaMin = tiempo.slice(0, 5);
+      this.horaMin=tiempo.slice(0, 5);
 
-      this.precioMinEntre = this.precios[8];
-      this.horaMinEntre = this.horas[0];
+      this.precioMinEntre=this.precios[8];
+      this.horaMinEntre=this.horas[0];
 
 
-      for (let i = 8; i <= 22; i++) {
+      for(let i=8; i<=22; i++) {
 
-        if (this.precios[i] <= this.precioMinEntre) {
+        if(this.precios[i]<=this.precioMinEntre) {
 
-          this.precioMinEntre = this.precios[i];
-          this.horaMinEntre = this.horas[i];
+          this.precioMinEntre=this.precios[i];
+          this.horaMinEntre=this.horas[i];
 
         }
       }
 
-      this.horaMinEntre = this.horaMinEntre.split("T")[1];
-      this.horaMinEntre = this.horaMinEntre.slice(0, 5);
+      this.horaMinEntre=this.horaMinEntre.split("T")[1];
+      this.horaMinEntre=this.horaMinEntre.slice(0, 5);
 
       //si hay datos guardados en el local storage con la clave data, se ejecuta el método
-      if (localStorage.getItem('data')) {
+      if(localStorage.getItem('data')) {
         this.getPreciosHomeLocal();
       }
     });
@@ -101,24 +100,24 @@ export class HomePage {
   GetAPIPrecioManiana() {
 
     this.apireeService.GetAPIDiaSiguiente().subscribe(data => {
-      this.items = data.indicator.values;
+      this.items=data.indicator.values;
 
-      for (let i = 0; i < data.indicator.values.length; i++) {
+      for(let i=0; i<data.indicator.values.length; i++) {
 
-        this.preciosmaniana.push(data.indicator.values[i].value / 1000);
+        this.preciosmaniana.push(data.indicator.values[i].value/1000);
 
         this.horasmaniana.push(data.indicator.values[i].datetime);
 
       }
 
       //Almacena el precio minimo del dia
-      this.precioMinManiana = Math.min.apply(Math, this.preciosmaniana);
+      this.precioMinManiana=Math.min.apply(Math, this.preciosmaniana);
 
       //Almacena el indice del precio minimo
-      var minIndex = this.preciosmaniana.indexOf(this.precioMinManiana);
+      var minIndex=this.preciosmaniana.indexOf(this.precioMinManiana);
 
       //Almacena el datetime del precio minimo  quita la hora
-      this.horaMinManiana = this.horasmaniana[minIndex].split("T")[1].slice(0, 5);
+      this.horaMinManiana=this.horasmaniana[minIndex].split("T")[1].slice(0, 5);
 
     });
   }
@@ -126,18 +125,18 @@ export class HomePage {
   GetPrecioMedio() {
     this.apiaverage.GetAPI().subscribe(data => {
       this.valorMedio=data.indicator.values;
-      
-      for (let i=0; i<data.indicator.values.length; i++){
+
+      for(let i=0; i<data.indicator.values.length; i++) {
         //console.log(data.indicator.values[i].value);
         this.preciopromedioDiario.push(data.indicator.values[i].value);
         this.fechasDatos.push(data.indicator.values[i].datetime);
       }
-      this.preciomax15dias = (Math.max.apply(null, this.preciopromedioDiario)/1000);
-      this.preciomin15dias = (Math.min.apply(null, this.preciopromedioDiario)/1000);
-      var suma = this.preciopromedioDiario.reduce((previous, current) => current += previous);
-      this.preciopromedio15dias = (suma/ this.preciopromedioDiario.length)/1000;
+      this.preciomax15dias=(Math.max.apply(null, this.preciopromedioDiario)/1000);
+      this.preciomin15dias=(Math.min.apply(null, this.preciopromedioDiario)/1000);
+      var suma=this.preciopromedioDiario.reduce((previous, current) => current+=previous);
+      this.preciopromedio15dias=(suma/this.preciopromedioDiario.length)/1000;
     })
-    }
+  }
 
   //Se ejecuta cuando entra en una página (antes de ser cargada), actualiza datos precios
   ionViewWillEnter() {
@@ -147,12 +146,12 @@ export class HomePage {
 
     // esperamos a que this.precioMinManiana este definido
     (async () => {
-      while (this.precioMinManiana === undefined)
+      while(this.precioMinManiana===undefined)
         await new Promise(resolve => setTimeout(resolve, 1000));
 
       // formateamos el precio a dos decimales  
-      var precio = Number((Math.abs(this.precioMinManiana) * 100).toPrecision(15));
-      precio = Math.round(precio) / 100 * Math.sign(this.precioMinManiana);
+      var precio=Number((Math.abs(this.precioMinManiana)*100).toPrecision(15));
+      precio=Math.round(precio)/100*Math.sign(this.precioMinManiana);
 
       // lanzamos la notificación
       cordova.plugins.notification.local.schedule({
@@ -161,8 +160,8 @@ export class HomePage {
         icon: "res://icon",
         color: '4caf50',
         title: "El precio más barato de mañana",
-        text: "Hora: " + this.horaMinManiana + " Precio: " + precio + "€",
-        trigger: { every: { hour: 21, minute: 45 }, count: 365 },
+        text: "Hora: "+this.horaMinManiana+" Precio: "+precio+"€",
+        trigger: {every: {hour: 19, minute: 30}, count: 365},
         foreground: true
       });
     })();
@@ -173,9 +172,9 @@ export class HomePage {
    se calcula los precios mínimos del electrodoméstico seleccionado, se añade 10% impuestos*/
   getPreciosHomeLocal() {
     //toma los datos del local storage, se parsea el json y se guarda lo obtenido
-    this.electrodomestico = JSON.parse(localStorage.getItem('data'));
-    this.precioMinEntre = (this.electrodomestico.consumo / 1000) * this.precioMinEntre * 1.10;
-    this.precioMin = (this.electrodomestico.consumo / 1000) * this.precioMin * 1.10;
-    this.nombreelectro = this.electrodomestico.nombre;
+    this.electrodomestico=JSON.parse(localStorage.getItem('data'));
+    this.precioMinEntre=(this.electrodomestico.consumo/1000)*this.precioMinEntre*1.10;
+    this.precioMin=(this.electrodomestico.consumo/1000)*this.precioMin*1.10;
+    this.nombreelectro=this.electrodomestico.nombre;
   }
 }

@@ -49,20 +49,20 @@
     </div>
 
     <div class="recuadro peq">
-      <p class="titulorecuadro">Precio medios último mes</p>
+      <p class="titulorecuadro">Precio medios último mes kWh</p>
       <div class="preciosmes">
         <div class="gris">Mín.</div>
         <div class="gris">Máx.</div>
         <div class="gris">Med.</div>
-        <div><strong>{{preciomin15dias| number: '1.2-2'}}€</strong></div>
-        <div><strong>{{preciomax15dias| number: '1.2-2'}}€</strong></div>
-        <div><strong>{{preciopromedio15dias| number: '1.2-2'}}€</strong></div>
+        <div class="verde recuadrocolores"><strong>{{preciomin15dias| number: '1.2-2'}}€</strong></div>
+        <div class="rojo recuadrocolores"><strong>{{preciomax15dias| number: '1.2-2'}}€</strong></div>
+        <div class="amarillo recuadrocolores"><strong>{{preciopromedio15dias| number: '1.2-2'}}€</strong></div>
       </div>
     </div>
 
 
-    <p class="nota">Los precios se actualizan a las 21:00. El precio que se muestra, es el coste de la electricidad
-      por el consumo del programa del electrodoméstico seleccionado. En los ajustes puedes escoger entre distintos
-      electrodomésticos o crear uno a tu medida.</p>
+    <p class="nota">Los precios se actualizan a las 21:00. El precio que se muestra, es un coste
+      <strong>aproximado</strong>
+    </p>
   </div>
 </ion-content>

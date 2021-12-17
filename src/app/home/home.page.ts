@@ -148,27 +148,17 @@ export class HomePage {
     this.GetAPIPrecioManiana();
     this.GetPrecioMedio();
 
-    // esperamos a que this.precioMinManiana este definido
-    (async () => {
-      while(this.precioMinManiana===undefined)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+    // lanzamos la notificación
+    cordova.plugins.notification.local.schedule({
+      id: 1,
+      smallIcon: "res://icon",
+      icon: "res://icon",
+      color: '4caf50',
+      title: "Ya puedes consultar los precios de la electricidad de mañana",
+      trigger: {every: {hour: 21, minute: 0}, count: 365},
+      foreground: true
+    });
 
-      // formateamos el precio a dos decimales  
-      var precio=Number((Math.abs(this.precioMinManiana)*100).toPrecision(15));
-      precio=Math.round(precio)/100*Math.sign(this.precioMinManiana);
-
-      // lanzamos la notificación
-      cordova.plugins.notification.local.schedule({
-        id: 1,
-        smallIcon: "res://icon",
-        icon: "res://icon",
-        color: '4caf50',
-        title: "El precio más barato de mañana",
-        text: "Hora: "+this.horaMinManiana+" Precio: "+precio+"€",
-        trigger: {every: {hour: 19, minute: 30}, count: 365},
-        foreground: true
-      });
-    })();
   }
 
 

@@ -135,6 +135,10 @@ export class HomePage {
       this.preciomin15dias=(Math.min.apply(null, this.preciopromedioDiario)/1000);
       var suma=this.preciopromedioDiario.reduce((previous, current) => current+=previous);
       this.preciopromedio15dias=(suma/this.preciopromedioDiario.length)/1000;
+
+      this.preciomax15dias=this.calculaPrecio(this.preciomax15dias, this.electrodomestico.consumo);
+      this.preciomin15dias=this.calculaPrecio(this.preciomin15dias, this.electrodomestico.consumo);
+      this.preciopromedio15dias=this.calculaPrecio(this.preciopromedio15dias, this.electrodomestico.consumo);
     })
   }
 
@@ -173,8 +177,12 @@ export class HomePage {
   getPreciosHomeLocal() {
     //toma los datos del local storage, se parsea el json y se guarda lo obtenido
     this.electrodomestico=JSON.parse(localStorage.getItem('data'));
-    this.precioMinEntre=(this.electrodomestico.consumo/1000)*this.precioMinEntre*1.10;
-    this.precioMin=(this.electrodomestico.consumo/1000)*this.precioMin*1.10;
+    this.precioMinEntre=this.calculaPrecio(this.precioMinEntre, this.electrodomestico.consumo);
+    this.precioMin=this.calculaPrecio(this.precioMin, this.electrodomestico.consumo);
     this.nombreelectro=this.electrodomestico.nombre;
+  }
+
+  calculaPrecio(precio: number, consumo: number): number {
+    return (consumo/1000)*precio*1.10;
   }
 }

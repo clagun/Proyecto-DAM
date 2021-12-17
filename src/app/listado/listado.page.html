@@ -11,11 +11,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <p>Precio kWh</p>
   <div id="listado">
-      <div class="cuadro" *ngFor="let precio of this.precios; let i = index">
-        <ion-icon name="ellipse" [ngClass]="GetClass(precio)"></ion-icon> <span
-          class="dif">{{apireeService.horas[i]}}</span>
-          {{precio | number: '1.2-2'}}€
-        </div>
+    <div class="cuadro" *ngFor="let precio of this.precios; let i = index">
+      <ion-icon name="ellipse" [ngClass]="GetClass(precio)"></ion-icon> <span
+        class="dif">{{apireeService.horas[i]}}</span>
+      {{precio | number: '1.2-2'}}€
+    </div>
   </div>
 </ion-content>

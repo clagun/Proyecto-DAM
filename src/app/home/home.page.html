@@ -19,24 +19,30 @@
     </h1>
     <div>
       <ion-button class="botonlista" [routerLink]="['/listado']">
-        <ion-icon name="list" class="iconolista"></ion-icon> Lista
+        <ion-icon name="list" class="iconolista"></ion-icon> 24H
       </ion-button>
       <ion-button class="botonlista" [routerLink]="['/charts']">
-        <ion-icon name="analytics-outline" class="iconolista"></ion-icon> Evolución
+        <ion-icon name="analytics-outline" class="iconolista"></ion-icon> Mes
       </ion-button>
       <ion-button class="botonlista" [routerLink]="['/charts']">
         <ion-icon name="calendar-outline" class="iconolista"></ion-icon> Hoy
       </ion-button>
     </div>
+
+    <div class="recuadro peq">
+      <p class="titulorecuadro">Electrodoméstico</p>
+      <div class="horaypreciorec">
+        <p class="nombrerecuadro">{{nombreelectro}}</p>
+      </div>
+    </div>
+
     <div class="recuadro">
       <p class="titulorecuadro">Precio mas barato</p>
       <div class="horaypreciorec">
         <p class="horarecuadro">{{horaMin}}</p>
         <p class="preciorecuadro">{{this.precioMin | number: '1.2-2'}}€</p>
       </div>
-      <p class="pierecuadro">Electrodoméstico <strong>{{nombreelectro}}</strong></p>
     </div>
-
 
     <div class="recuadro">
       <p class="titulorecuadro">Precio mas barato de 08:00 a 22:00</p>
@@ -44,12 +50,10 @@
         <p class="horarecuadro">{{horaMinEntre}}</p>
         <p class="preciorecuadro">{{this.precioMinEntre | number: '1.2-2'}}€</p>
       </div>
-      <p class="pierecuadro">Electrodoméstico <strong>{{nombreelectro}}</strong></p>
-
     </div>
 
-    <div class="recuadro peq">
-      <p class="titulorecuadro">Precio medios último mes kWh</p>
+    <div class="recuadro">
+      <p class="titulorecuadro">Precio medios último mes</p>
       <div class="preciosmes">
         <div class="gris">Mín.</div>
         <div class="gris">Máx.</div>
@@ -61,8 +65,8 @@
     </div>
 
 
-    <p class="nota">Los precios se actualizan a las 21:00. El precio que se muestra, es un coste
-      <strong>aproximado</strong>
+    <p class="nota">Los precios se actualizan a las <strong>21:00</strong>. El precio que se muestra, es un coste
+      <strong>aproximado</strong>.
     </p>
   </div>
 </ion-content>

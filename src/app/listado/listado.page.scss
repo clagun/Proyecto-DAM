@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 100%;
+    height: 95%;
 }
 
 .cuadro {
@@ -25,4 +25,15 @@
 
 .cuadro ion-icon{
     font-size: 30px !important;
+}
+
+
+p {
+    padding: 5px;
+    margin: 0px;
+    background-color: white;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: right;
+    height: 5%;
 }

@@ -76,9 +76,38 @@ export class ChartsPage implements AfterViewInit {
             pointHitRadius: 10,
             data: this.preciopromedioDiario,
             spanGaps: false,
-          }
+          },
         ]
-      }
+      },
+      options: {
+        color: '#333',
+        responsive: true,
+        scales: {
+          y: {
+            ticks: {
+              color: '#333',
+            },
+            grid: {
+              borderColor: '#333',
+              color: '#333',
+              borderWidth: 0.2,
+              lineWidth: 0.1
+            }
+          },
+          x: {
+            ticks: {
+              color: '#333',
+            },
+            grid: {
+              borderColor: '#333',
+              color: '#333',
+              borderWidth: 0.2,
+              lineWidth: 0.1
+            }
+          }
+        }
+      },
+
     });
   }
 }

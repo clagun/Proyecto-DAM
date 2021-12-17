@@ -21,7 +21,8 @@
         <ion-label>Elige electrodoméstico</ion-label>
         <ion-select okText="aceptar" cancelText="cancelar" [(ngModel)]="itemSelecConfig"
           (ngModelChange)="guardarOpcionConfig()">
-          <ion-select-option *ngFor="let electro of electrodomesticos" [value]="electro">{{electro.nombre + ' (' +
+          <ion-select-option *ngFor="let electro of electrodomesticos" [value]="electro">{{electro.nombre
+            + ' (' +
             electro.consumo + 'wh)'}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -45,9 +46,7 @@
       <ion-button size="small" class="btnCrear" [disabled]="!formulario.valid" type="submit">CREAR</ion-button>
     </form>
 
-    <p class="notaformu">Tienes que introducir el consumo del electrodoméstico para el programa que uses habitualmente.
-      El
-      consumo se introduce en Wh. Si no conoces el dato hay enchufes que te marcan el consumo.</p>
+    <p class="notaformu">Hay que introducir el consumo (Wh) del programa que uses habitualmente.</p>
   </div>
 
   <p class="nuevoelectro"><strong>Eliminar electrodoméstico</strong></p>

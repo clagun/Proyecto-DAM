@@ -24,7 +24,7 @@ $verde: #4caf50;
   display: flex;
   align-content: space-between;
   flex-wrap: wrap;
-  height: 6em;
+  height: 5em;
   background-color: #dedede;
   border-radius: 5px;
   overflow: hidden;
@@ -64,6 +64,14 @@ $verde: #4caf50;
   font-family: 'Ubuntu' !important;
 }
 
+.nombrerecuadro {
+  font-size: 20px !important;
+  font-weight: bold;
+  font-family: 'Ubuntu' !important;
+  text-align: left;
+  padding-left: 10px;
+}
+
 .preciorecuadro {
   color: $verde;
   text-shadow: #333 2px 2px;
@@ -76,7 +84,7 @@ $verde: #4caf50;
 .botonlista {
   font-size: 14px;
   font-weight: bold;
-  width: 45%;
+  min-width: 25%;
   margin: 5px;
   --background: #4caf50;
 }
@@ -101,7 +109,7 @@ $verde: #4caf50;
 }
 
 .peq{
-  height: 5em;
+  height: 3em;
 }
 
 .gris {

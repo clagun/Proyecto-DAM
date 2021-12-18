@@ -19,7 +19,7 @@
     <ion-list>
       <ion-item>
         <ion-label>Elige electrodoméstico</ion-label>
-        <ion-select okText="aceptar" cancelText="cancelar" [(ngModel)]="itemSelecConfig"
+        <ion-select okText="aceptar" cancelText="cancelar" [(ngModel)]="itemSelecConfig" [compareWith]="compareWith"
           (ngModelChange)="guardarOpcionConfig()">
           <ion-select-option *ngFor="let electro of electrodomesticos" [value]="electro">{{electro.nombre
             + ' (' +

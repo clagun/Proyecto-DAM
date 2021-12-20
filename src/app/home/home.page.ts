@@ -40,8 +40,9 @@ export class HomePage {
     private apiaverage: ApiaverageService,
     private platform: Platform,
     private routerOutlet: IonRouterOutlet) {
-    this.GetAPIPrecio();
-    this.GetPrecioMedio();
+    //this.GetAPIPrecio();
+    //this.GetPrecioMedio();
+    //this.GetAPIPrecioManiana();
 
     //se añade función de salir de la app, al dar botón atrás del hardware
     this.platform.backButton.subscribeWithPriority(-1, () => {
@@ -61,39 +62,52 @@ export class HomePage {
 
         this.precios.push(data.indicator.values[i].value/1000);
         this.horas.push(data.indicator.values[i].datetime);
-
       }
-
-      this.precioMin=Math.min.apply(Math, this.precios);
-      var index=this.precios.indexOf(this.precioMin);
-
-      //Realiza un split de la fecha desde la T (2021-10-16T21:00:00.000+02:00) entonces almacena solo el tiempo.
-      var tiempo=this.horas[index].split("T")[1];
-      //Realiza un slice que quita el sobrante de la hora (segundos y cambio de hora) 21:00:00.000+02:00
-      this.horaMin=tiempo.slice(0, 5);
-
-      this.precioMinEntre=this.precios[8];
-      this.horaMinEntre=this.horas[0];
-
-
-      for(let i=8; i<=22; i++) {
-
-        if(this.precios[i]<=this.precioMinEntre) {
-
-          this.precioMinEntre=this.precios[i];
-          this.horaMinEntre=this.horas[i];
-
-        }
-      }
-
-      this.horaMinEntre=this.horaMinEntre.split("T")[1];
-      this.horaMinEntre=this.horaMinEntre.slice(0, 5);
-
-      //si hay datos guardados en el local storage con la clave data, se ejecuta el método
-      if(localStorage.getItem('data')) {
-        this.getPreciosHomeLocal();
-      }
+      this.precioMenor();
     });
+  }
+
+  
+  private precioMenor() {
+    var precioscomparar: Array<any>=[] ;
+    var horascomparar: Array<any>=[]; 
+    
+    if(this.apireeService.cambiarFecha == false){
+      precioscomparar = this.precios;
+      horascomparar= this.horas;
+    }else{
+      precioscomparar = this.preciosmaniana;
+      horascomparar = this.horasmaniana;
+    }
+    this.precioMin = Math.min.apply(Math, precioscomparar);
+    var index = precioscomparar.indexOf(this.precioMin);
+
+    //Realiza un split de la fecha desde la T (2021-10-16T21:00:00.000+02:00) entonces almacena solo el tiempo.
+    var tiempo = horascomparar[index].split("T")[1];
+    //Realiza un slice que quita el sobrante de la hora (segundos y cambio de hora) 21:00:00.000+02:00
+    this.horaMin = tiempo.slice(0, 5);
+
+    this.precioMinEntre = precioscomparar[8];
+    this.horaMinEntre = horascomparar[0];
+
+
+    for (let i = 8; i <= 22; i++) {
+
+      if (precioscomparar[i] <= this.precioMinEntre) {
+
+        this.precioMinEntre = precioscomparar[i];
+        this.horaMinEntre = horascomparar[i];
+
+      }
+    }
+
+    this.horaMinEntre = this.horaMinEntre.split("T")[1];
+    this.horaMinEntre = this.horaMinEntre.slice(0, 5);
+
+    //si hay datos guardados en el local storage con la clave data, se ejecuta el método
+    if (localStorage.getItem('data')) {
+      this.getPreciosHomeLocal();
+    }
   }
 
   //Realiza la subscripción al API, coge los precios y horas y los guarda en un array, coge el precio mas barato y hora para el dia siguiente
@@ -105,20 +119,10 @@ export class HomePage {
       for(let i=0; i<data.indicator.values.length; i++) {
 
         this.preciosmaniana.push(data.indicator.values[i].value/1000);
-
         this.horasmaniana.push(data.indicator.values[i].datetime);
 
       }
-
-      //Almacena el precio minimo del dia
-      this.precioMinManiana=Math.min.apply(Math, this.preciosmaniana);
-
-      //Almacena el indice del precio minimo
-      var minIndex=this.preciosmaniana.indexOf(this.precioMinManiana);
-
-      //Almacena el datetime del precio minimo  quita la hora
-      this.horaMinManiana=this.horasmaniana[minIndex].split("T")[1].slice(0, 5);
-
+      this.precioMenor();
     });
   }
 
@@ -145,8 +149,10 @@ export class HomePage {
   //Se ejecuta cuando entra en una página (antes de ser cargada), actualiza datos precios
   ionViewWillEnter() {
     this.GetAPIPrecio();
-    this.GetAPIPrecioManiana();
     this.GetPrecioMedio();
+    if(this.apireeService.cambiarFecha == true){
+      this.GetAPIPrecioManiana();
+    }
 
     // lanzamos la notificación
     cordova.plugins.notification.local.schedule({

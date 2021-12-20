@@ -11,11 +11,9 @@ import {DatePipe} from '@angular/common'
   templateUrl: './charts.page.html',
   styleUrls: ['./charts.page.scss'],
 })
-export class ChartsPage implements AfterViewInit {
-  @ViewChild('barCanvas') private barCanvas: ElementRef;
+export class ChartsPage {
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
 
-  barChart: any;
   lineChart: any;
   valorMedio: Observable<any>;
   preciopromedioDiario: Array<any>=[];
@@ -26,64 +24,61 @@ export class ChartsPage implements AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-    //this.barChartMethod();
+  ionViewWillEnter() {
     this.GetPrecioMedio();
-    this.lineChartMethod();
   }
 
   GetPrecioMedio() {
+    this.preciopromedioDiario=[];
+    this.fechasDatos=[];
     this.apiaverage.GetAPI().subscribe(data => {
-      this.valorMedio=data.indicator.values;
-
+      console.log(data.indicator.values);
       for(let i=0; i<data.indicator.values.length; i++) {
         this.preciopromedioDiario.push(data.indicator.values[i].value);
         var fecha=this.formatearFecha(data.indicator.values[i].datetime);
         this.fechasDatos.push(fecha);
       }
+      this.lineChartMethod();
     })
   }
 
   formatearFecha(fecha: Date): string {
-    var fechatext=this.datepipe.transform(fecha, 'YYYY-MM-dd');
+    var fechatext=this.datepipe.transform(fecha, 'MM-dd');
     return fechatext;
   }
 
   lineChartMethod() {
-    this.lineChart=new Chart(this.lineCanvas.nativeElement, {
+    let ctx=this.lineCanvas.nativeElement;
+    ctx.height='20vh';
+    if(this.lineChart) {
+      this.lineChart.destroy();
+    }
+    this.lineChart=new Chart(ctx, {
       type: 'line',
       data: {
         labels: this.fechasDatos,
         datasets: [
           {
             label: '€/MWh',
-            fill: false,
             backgroundColor: '#ffffff',
             borderColor: '#4caf50',
             borderCapStyle: 'butt',
-            borderDash: [],
-            borderWidth: 2,
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
             pointBorderColor: '#4caf50',
             pointBackgroundColor: '#fff',
             pointBorderWidth: 2,
             pointHoverRadius: 5,
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: '#4caf50',
-            pointHoverBorderWidth: 2,
             pointRadius: 3,
             pointHitRadius: 10,
             data: this.preciopromedioDiario,
-            spanGaps: false,
           },
         ]
       },
       options: {
         color: '#333',
-        responsive: true,
         scales: {
           y: {
+            min: 0,
+            max: 500,
             ticks: {
               color: '#333',
             },

@@ -24,7 +24,7 @@
       <ion-button class="botonlista" [routerLink]="['/charts']">
         <ion-icon name="analytics-outline" class="iconolista"></ion-icon> Mes
       </ion-button>
-      <ion-button class="botonlista" [routerLink]="['/charts']">
+      <ion-button class="botonlista" (click)= "cambiarFecha()">
         <ion-icon name="calendar-outline" class="iconolista"></ion-icon> Hoy
       </ion-button>
     </div>

@@ -45,12 +45,8 @@ export class ApiaverageService {
 
   //Realiza la peticion GET al servidor API
   GetAPI(): Observable<any> {
-    //Realiza el GET y asigna los valores al Observable items del Array de objetos values dentro del array Indicator.
-
-    //https://api.esios.ree.es/indicators/59526?start_date=2021-12-03T00%3A00%3A00Z&end_date=2021-12-10T07%3A34%3A17Z
     var url = "https://api.esios.ree.es/indicators/1001?&geo_ids[]=8741&&time_trunc=day&&start_date=" + this.fecharequest + "&&end_date=" + this.fechaHoy + "&&time_agg=avg"
     return this.httpClient.get(url, this.headers).pipe(catchError(this.ErrorHandler));
-    //return this.httpClient.get(this.url, this.headers).pipe(catchError(this.ErrorHandler));
   }
 
   ErrorHandler(error: HttpErrorResponse) {

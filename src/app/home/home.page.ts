@@ -2,8 +2,7 @@ import {Component} from '@angular/core';
 import {ApireeService} from '../servicios/apiree.service';
 import {Observable} from 'rxjs';
 import {ApiaverageService} from '../servicios/apiaverage.service';
-
-import {IonRouterOutlet, Platform} from '@ionic/angular';
+import {IonRouterOutlet, Platform, ToastController} from '@ionic/angular';
 
 declare var cordova: any; // stop TypeScript complaining.
 
@@ -39,12 +38,10 @@ export class HomePage {
   constructor(private apireeService: ApireeService,
     private apiaverage: ApiaverageService,
     private platform: Platform,
-    private routerOutlet: IonRouterOutlet) {
-    //this.GetAPIPrecio();
-    //this.GetPrecioMedio();
-    //this.GetAPIPrecioManiana();
-
-    //se añade función de salir de la app, al dar botón atrás del hardware
+    private routerOutlet: IonRouterOutlet, 
+    public toastController: ToastController) {
+   
+      //se añade función de salir de la app, al dar botón atrás del hardware
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if(!this.routerOutlet.canGoBack()) {
         navigator['app'].exitApp();
@@ -92,12 +89,9 @@ export class HomePage {
 
 
     for (let i = 8; i <= 22; i++) {
-
       if (precioscomparar[i] <= this.precioMinEntre) {
-
         this.precioMinEntre = precioscomparar[i];
         this.horaMinEntre = horascomparar[i];
-
       }
     }
 
@@ -180,5 +174,28 @@ export class HomePage {
 
   calculaPrecio(precio: number, consumo: number): number {
     return (consumo/1000)*precio*1.10;
+  }
+
+  cambiarFecha(){
+    if(new Date().getHours() >= 21) {
+      if(this.apireeService.cambiarFecha == false){
+        this.apireeService.cambiarFecha = true;
+        this.GetAPIPrecioManiana();
+      }else {
+        this.apireeService.cambiarFecha = false;
+        this.GetAPIPrecio(); 
+      }
+    }else {
+      this.presentToast();
+    }
+    
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'No se han actualizado los precios de mañana. Regresa a las 21 h',
+      duration: 2000
+    });
+    toast.present();
   }
 }

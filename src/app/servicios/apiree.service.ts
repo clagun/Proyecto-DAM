@@ -38,15 +38,17 @@ export class ApireeService {
 
   //Devuelve la fecha del dia.
   FechaCorta() :string{
-    var fecha =  this.fechaMostrar.toLocaleDateString('es-ES');
-    return fecha; 
+    var fecha = this.obtenerFecha();
+    var fecha1 =  this.fechaMostrar.toLocaleDateString('es-ES');
+    return fecha1; 
   }
 
   obtenerFecha(): Date {
     var hora = this.datepipe.transform(this.fechaHoy,'HH:mm')
     console.log('la fecha de hoy es: ' , this.fechaHoy)
     this.fechaMostrar = new Date(); 
-    if (hora >= '20:55'){
+    console.log(this.cambiarFecha)
+    if (hora >= '20:59' || this.cambiarFecha == true){
       this.fechaMostrar.setDate(this.fechaMostrar.getDate() + 1);
       this.cambiarFecha = true;
     } 
@@ -80,6 +82,7 @@ export class ApireeService {
   }
 
   GetAPIDiaSiguiente(): Observable<any> {
+    this.obtenerFecha();
     var fechaconsulta = this.formatearFecha(this.fechaMostrar);
     console.log("LA FECHA CONSULTAR ES: " + fechaconsulta);
     var urldiaSiguiente ="https://api.esios.ree.es/indicators/1001?start_date=" + fechaconsulta + "T00:00&end_date=" + fechaconsulta + "T23:59&geo_ids[]=8741"

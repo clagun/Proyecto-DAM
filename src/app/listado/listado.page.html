@@ -11,7 +11,8 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <p>Precio kWh</p>
+  
+  <p>{{encabezadoElectro}}</p>
   <div id="listado">
     <div class="cuadro" *ngFor="let precio of this.precios; let i = index">
       <ion-icon name="ellipse" [ngClass]="GetClass(precio)"></ion-icon> <span

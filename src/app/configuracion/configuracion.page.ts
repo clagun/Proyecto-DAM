@@ -66,6 +66,10 @@ export class ConfiguracionPage implements OnInit {
   guardarOpcionConfig() {
     //Se guarda los valores y se vuelve a la página home
     localStorage.setItem('data', JSON.stringify(this.itemSelecConfig));
+    //si la opción es la de no elegir electro, se borra localstorage
+    if(localStorage.getItem('data').includes('noElegidoElectro')) {
+      localStorage.removeItem('data')
+    }
     this.nav.navigateRoot('home');
   }
 

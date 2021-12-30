@@ -101,6 +101,8 @@ export class HomePage {
     //si hay datos guardados en el local storage con la clave data, se ejecuta el método
     if (localStorage.getItem('data')) {
       this.getPreciosHomeLocal();
+    } else {
+      this.nombreelectro = "No elegido ";
     }
   }
 
@@ -133,10 +135,11 @@ export class HomePage {
       this.preciomin15dias=(Math.min.apply(null, this.preciopromedioDiario)/1000);
       var suma=this.preciopromedioDiario.reduce((previous, current) => current+=previous);
       this.preciopromedio15dias=(suma/this.preciopromedioDiario.length)/1000;
-
-      this.preciomax15dias=this.calculaPrecio(this.preciomax15dias, this.electrodomestico.consumo);
-      this.preciomin15dias=this.calculaPrecio(this.preciomin15dias, this.electrodomestico.consumo);
-      this.preciopromedio15dias=this.calculaPrecio(this.preciopromedio15dias, this.electrodomestico.consumo);
+      if (localStorage.getItem('data')) {
+        this.preciomax15dias=this.calculaPrecio(this.preciomax15dias, this.electrodomestico.consumo);
+        this.preciomin15dias=this.calculaPrecio(this.preciomin15dias, this.electrodomestico.consumo);
+        this.preciopromedio15dias=this.calculaPrecio(this.preciopromedio15dias, this.electrodomestico.consumo);
+      }
     })
   }
 

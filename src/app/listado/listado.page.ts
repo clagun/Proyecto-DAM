@@ -16,15 +16,13 @@ export class ListadoPage implements OnInit {
   preciosElectro: Array<any> = [];
   //el electrodoméstico seleccionado
   electroSeleccionado: any;
+  encabezadoElectro: any;
  
   minArr: number;
   maxArr: number;
 
   constructor(private apireeService: ApireeService) { 
-    this.GetAPILista();
-    
-   //se obtienen los datos de precios del local storage
-   //this.getPreciosListadoLocal();
+    this.GetAPILista();   
   }
 
   //Toma como parametro el precio desde la pagina .html, realiza los calculos para saber que color tiene que ser el circulo.
@@ -70,6 +68,8 @@ export class ListadoPage implements OnInit {
    //si hay datos en el local storage, se ejecuta el método para conseguir del electrodoméstico seleccionado
     if(localStorage.getItem('data')){
       this.getPreciosListadoLocal();
+     } else {
+      this.encabezadoElectro = "Precio kWh";
      }
 
    });
@@ -78,24 +78,25 @@ export class ListadoPage implements OnInit {
   ngOnInit() {
   }
 
-    //obtiene datos de los precios según electrodoméstico seleccionado
-    getPreciosListadoLocal() {    
-      //toma los datos del local storage, se parsea el json y se guarda lo obtenido
-      this.electroSeleccionado = JSON.parse(localStorage.getItem('data'));
-      //se recorre el array de precios, se va haciendo el cálculo y se guarda
-      for(let i = 0; i < this.precios.length; i++) {
-        this.preciosElectro.push((this.electroSeleccionado.consumo / 1000) * this.precios[i]);        
-        }   
-        //se elimina el contenido del array precios
-        while(this.precios.length > 0)
-           this.precios.pop();
-        //se guarda en precios la información del array con los precios del electrodoméstico
-        for (var i = 0; i < this.preciosElectro.length; i++) {
-          this.precios.push(this.preciosElectro[i]);
-        }
-           
-        this.maxArr = Math.max.apply(Math, this.precios);
-        this.minArr = Math.min.apply(Math, this.precios);        
-  }
+  //obtiene datos de los precios según electrodoméstico seleccionado
+  getPreciosListadoLocal() {    
+    //toma los datos del local storage, se parsea el json y se guarda lo obtenido
+    this.electroSeleccionado = JSON.parse(localStorage.getItem('data'));
+
+    this.encabezadoElectro = this.electroSeleccionado.nombre;
+    
+    //se recorre el array de precios, se va haciendo el cálculo y se guarda
+    for(let i = 0; i < this.precios.length; i++) {
+      this.preciosElectro.push((this.electroSeleccionado.consumo / 1000) * this.precios[i]*1.10);        
+      }
+    
+    //se borra el contenido de precios y se guarda los nuevos valores del electrodoméstico
+    this.precios.splice(0, this.precios.length);
+    this.precios = this.preciosElectro;
+  
+    this.maxArr = Math.max.apply(Math, this.precios);
+    this.minArr = Math.min.apply(Math, this.precios); 
+    }
+
 
 }

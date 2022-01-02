@@ -14,7 +14,7 @@ export class ApireeService {
   items: Observable<any>
   horas: Array<any>=[];
   fechaMostrar : any;
-  cambiarFecha = false;
+  hora : any;
 
     //Coge la fecha y luego coge el dia, mes y año, los guarda en un String y los pasa al url para la API.
     fechaHoy = new Date();
@@ -38,21 +38,18 @@ export class ApireeService {
 
   //Devuelve la fecha del dia.
   FechaCorta() :string{
-    var fecha = this.obtenerFecha();
-    var fecha1 =  this.fechaMostrar.toLocaleDateString('es-ES');
+    var fecha1= this.obtenerFecha().toLocaleDateString('es-ES');
+    console.log("la fecha a mostrar es:" + fecha1)
     return fecha1; 
   }
 
   obtenerFecha(): Date {
-    var hora = this.datepipe.transform(this.fechaHoy,'HH:mm')
-    console.log('la fecha de hoy es: ' , this.fechaHoy)
+    this.hora = this.datepipe.transform(this.fechaHoy,'HH:mm')
     this.fechaMostrar = new Date(); 
-    console.log(this.cambiarFecha)
-    if (hora >= '20:59' || this.cambiarFecha == true){
+    if (new Date().getHours() >= 21){
       this.fechaMostrar.setDate(this.fechaMostrar.getDate() + 1);
-      this.cambiarFecha = true;
+      //this.cambiarFecha = true;
     } 
-    console.log('la fecha a mostrar es: ' , this.fechaMostrar)
     return this.fechaMostrar;
   }
 
@@ -84,7 +81,6 @@ export class ApireeService {
   GetAPIDiaSiguiente(): Observable<any> {
     this.obtenerFecha();
     var fechaconsulta = this.formatearFecha(this.fechaMostrar);
-    console.log("LA FECHA CONSULTAR ES: " + fechaconsulta);
     var urldiaSiguiente ="https://api.esios.ree.es/indicators/1001?start_date=" + fechaconsulta + "T00:00&end_date=" + fechaconsulta + "T23:59&geo_ids[]=8741"
     return this.httpClient.get(urldiaSiguiente, this.headers).pipe(catchError(this.ErrorHandler));
 

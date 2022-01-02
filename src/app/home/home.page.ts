@@ -34,6 +34,9 @@ export class HomePage {
 
   electrodomestico: any;
   nombreelectro: any;
+  hora: any;
+  textoDia : any;
+  fecha: any;
 
   constructor(private apireeService: ApireeService,
     private apiaverage: ApiaverageService,
@@ -41,6 +44,7 @@ export class HomePage {
     private routerOutlet: IonRouterOutlet, 
     public toastController: ToastController) {
    
+      this.cambiarFecha();
       //se añade función de salir de la app, al dar botón atrás del hardware
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if(!this.routerOutlet.canGoBack()) {
@@ -61,6 +65,7 @@ export class HomePage {
         this.horas.push(data.indicator.values[i].datetime);
       }
       this.precioMenor();
+      console.log("los precios de hoy: " + this.precios)
     });
   }
 
@@ -69,7 +74,7 @@ export class HomePage {
     var precioscomparar: Array<any>=[] ;
     var horascomparar: Array<any>=[]; 
     
-    if(this.apireeService.cambiarFecha == false){
+    if(this.textoDia == "Hoy"){
       precioscomparar = this.precios;
       horascomparar= this.horas;
     }else{
@@ -127,14 +132,15 @@ export class HomePage {
       this.valorMedio=data.indicator.values;
 
       for(let i=0; i<data.indicator.values.length; i++) {
-        //console.log(data.indicator.values[i].value);
         this.preciopromedioDiario.push(data.indicator.values[i].value);
         this.fechasDatos.push(data.indicator.values[i].datetime);
       }
+
       this.preciomax15dias=(Math.max.apply(null, this.preciopromedioDiario)/1000);
       this.preciomin15dias=(Math.min.apply(null, this.preciopromedioDiario)/1000);
       var suma=this.preciopromedioDiario.reduce((previous, current) => current+=previous);
       this.preciopromedio15dias=(suma/this.preciopromedioDiario.length)/1000;
+
       if (localStorage.getItem('data')) {
         this.preciomax15dias=this.calculaPrecio(this.preciomax15dias, this.electrodomestico.consumo);
         this.preciomin15dias=this.calculaPrecio(this.preciomin15dias, this.electrodomestico.consumo);
@@ -147,10 +153,11 @@ export class HomePage {
   ionViewWillEnter() {
     this.GetAPIPrecio();
     this.GetPrecioMedio();
-    if(this.apireeService.cambiarFecha == true){
+    this.hora = new Date().getHours();
+    if(this.hora >= 21){
       this.GetAPIPrecioManiana();
     }
-
+    
     // lanzamos la notificación
     cordova.plugins.notification.local.schedule({
       id: 1,
@@ -180,25 +187,16 @@ export class HomePage {
   }
 
   cambiarFecha(){
-    if(new Date().getHours() >= 21) {
-      if(this.apireeService.cambiarFecha == false){
-        this.apireeService.cambiarFecha = true;
-        this.GetAPIPrecioManiana();
-      }else {
-        this.apireeService.cambiarFecha = false;
-        this.GetAPIPrecio(); 
-      }
-    }else {
-      this.presentToast();
-    }
     
-  }
-
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'No se han actualizado los precios de mañana. Regresa a las 21 h',
-      duration: 2000
-    });
-    toast.present();
-  }
+    if (this.textoDia == "Hoy"){
+      this.textoDia = "Mañana";
+      //this.apireeService.cambiarFecha = true;
+      this.GetAPIPrecio();
+      this.fecha= this.apireeService.FechaCorta();
+    }else {
+      this.textoDia = "Hoy";
+      //this.apireeService.cambiarFecha = false;
+      this.GetAPIPrecioManiana();
+    }     
+  }  
 }

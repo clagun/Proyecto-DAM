@@ -46,6 +46,7 @@ export class ApiaverageService {
   //Realiza la peticion GET al servidor API
   GetAPI(): Observable<any> {
     var url = "https://api.esios.ree.es/indicators/1001?&geo_ids[]=8741&&time_trunc=day&&start_date=" + this.fecharequest + "&&end_date=" + this.fechaHoy + "&&time_agg=avg"
+    //console.log("https://api.esios.ree.es/indicators/1001?&geo_ids[]=8741&&time_trunc=day&&start_date=" + this.fecharequest + "&&end_date=" + this.fechaHoy + "&&time_agg=avg");
     return this.httpClient.get(url, this.headers).pipe(catchError(this.ErrorHandler));
   }
 
@@ -58,5 +59,3 @@ export class ApiaverageService {
     return fechatext;
   }
 }
-
-

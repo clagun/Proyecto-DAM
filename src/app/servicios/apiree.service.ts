@@ -15,6 +15,7 @@ export class ApireeService {
   horas: Array<any>=[];
   fechaMostrar : any;
   hora : any;
+  cambiarFecha : any;
 
     //Coge la fecha y luego coge el dia, mes y año, los guarda en un String y los pasa al url para la API.
     fechaHoy = new Date();
@@ -38,19 +39,29 @@ export class ApireeService {
 
   //Devuelve la fecha del dia.
   FechaCorta() :string{
-    var fecha1= this.obtenerFecha().toLocaleDateString('es-ES');
+    var fecha1= this.fechamostrar().toLocaleDateString('es-ES');
     console.log("la fecha a mostrar es:" + fecha1)
     return fecha1; 
   }
 
+  fechamostrar(): Date{
+    var fecha1 = new Date();
+    if (this.cambiarFecha == false){
+      fecha1.setDate(new Date().getDate() -1);
+      return fecha1;
+    }else {
+      return fecha1;
+    }
+  }
+
   obtenerFecha(): Date {
-    this.hora = this.datepipe.transform(this.fechaHoy,'HH:mm')
     this.fechaMostrar = new Date(); 
     if (new Date().getHours() >= 21){
-      this.fechaMostrar.setDate(this.fechaMostrar.getDate() + 1);
-      //this.cambiarFecha = true;
-    } 
+      this.fechaMostrar.setDate(this.fechaMostrar.getDate() +1);
+      return this.fechaMostrar;
+    }  
     return this.fechaMostrar;
+       
   }
 
   //Realiza el calculo para hacer las horas del dia y las guarda en un array.

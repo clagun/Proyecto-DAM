@@ -190,13 +190,15 @@ export class HomePage {
     
     if (this.textoDia == "Hoy"){
       this.textoDia = "Mañana";
-      //this.apireeService.cambiarFecha = true;
+      this.apireeService.cambiarFecha = false;
       this.GetAPIPrecio();
       this.fecha= this.apireeService.FechaCorta();
+      
     }else {
       this.textoDia = "Hoy";
-      //this.apireeService.cambiarFecha = false;
+      this.apireeService.cambiarFecha = true;
       this.GetAPIPrecioManiana();
+      this.fecha= this.apireeService.FechaCorta();
     }     
   }  
 }

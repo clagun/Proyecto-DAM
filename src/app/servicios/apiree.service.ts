@@ -46,8 +46,8 @@ export class ApireeService {
 
   fechamostrar(): Date{
     var fecha1 = new Date();
-    if (this.cambiarFecha == false){
-      fecha1.setDate(new Date().getDate() -1);
+    if (this.cambiarFecha == true){
+      fecha1.setDate(new Date().getDate()  + 1);
       return fecha1;
     }else {
       return fecha1;

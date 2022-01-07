@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
-import { ApiaverageService } from './apiaverage.service';
+import {DatePipe} from '@angular/common';
+import {ApiaverageService} from './apiaverage.service';
 
 
 @Injectable({
@@ -13,15 +13,15 @@ export class ApireeService {
 
   items: Observable<any>
   horas: Array<any>=[];
-  fechaMostrar : any;
-  hora : any;
-  cambiarFecha : any;
+  fechaMostrar: any;
+  hora: any;
+  cambiarFecha: any;
 
-    //Coge la fecha y luego coge el dia, mes y año, los guarda en un String y los pasa al url para la API.
-    fechaHoy = new Date();
+  //Coge la fecha y luego coge el dia, mes y año, los guarda en un String y los pasa al url para la API.
+  fechaHoy=new Date();
 
   url="https://api.esios.ree.es/indicators/1001?&geo_ids[]=8741&&time_trunc=hour"
-  
+
   headers={
     headers: new HttpHeaders({
       'Accept': 'application/json; application/vnd.esios-api-v1+json',
@@ -31,37 +31,37 @@ export class ApireeService {
   };
 
   constructor(private httpClient: HttpClient,
-              public datepipe: DatePipe,
-              public apiAverage : ApiaverageService) {
+    public datepipe: DatePipe,
+    public apiAverage: ApiaverageService) {
     this.GetHora();
     this.obtenerFecha();
   }
 
   //Devuelve la fecha del dia.
-  FechaCorta() :string{
-    var fecha1= this.fechamostrar().toLocaleDateString('es-ES');
-    console.log("la fecha a mostrar es:" + fecha1)
-    return fecha1; 
+  FechaCorta(): Date {
+    var fecha1=this.fechamostrar();
+    console.log("la fecha a mostrar es:"+fecha1)
+    return fecha1;
   }
 
-  fechamostrar(): Date{
-    var fecha1 = new Date();
-    if (this.cambiarFecha == true){
-      fecha1.setDate(new Date().getDate()  + 1);
+  fechamostrar(): Date {
+    var fecha1=new Date();
+    if(this.cambiarFecha==true) {
+      fecha1.setDate(new Date().getDate()+1);
       return fecha1;
-    }else {
+    } else {
       return fecha1;
     }
   }
 
   obtenerFecha(): Date {
-    this.fechaMostrar = new Date(); 
-    if (new Date().getHours() >= 21){
-      this.fechaMostrar.setDate(this.fechaMostrar.getDate() +1);
+    this.fechaMostrar=new Date();
+    if(new Date().getHours()>=21) {
+      this.fechaMostrar.setDate(this.fechaMostrar.getDate()+1);
       return this.fechaMostrar;
-    }  
+    }
     return this.fechaMostrar;
-       
+
   }
 
   //Realiza el calculo para hacer las horas del dia y las guarda en un array.
@@ -91,14 +91,14 @@ export class ApireeService {
 
   GetAPIDiaSiguiente(): Observable<any> {
     this.obtenerFecha();
-    var fechaconsulta = this.formatearFecha(this.fechaMostrar);
-    var urldiaSiguiente ="https://api.esios.ree.es/indicators/1001?start_date=" + fechaconsulta + "T00:00&end_date=" + fechaconsulta + "T23:59&geo_ids[]=8741"
+    var fechaconsulta=this.formatearFecha(this.fechaMostrar);
+    var urldiaSiguiente="https://api.esios.ree.es/indicators/1001?start_date="+fechaconsulta+"T00:00&end_date="+fechaconsulta+"T23:59&geo_ids[]=8741"
     return this.httpClient.get(urldiaSiguiente, this.headers).pipe(catchError(this.ErrorHandler));
 
   }
 
   formatearFecha(fecha: Date): string {
-    var fechatext = this.datepipe.transform(fecha, 'YYYY-MM-dd');
+    var fechatext=this.datepipe.transform(fecha, 'YYYY-MM-dd');
     return fechatext;
   }
 

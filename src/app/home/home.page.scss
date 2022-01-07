@@ -22,9 +22,9 @@ $verde: #4caf50;
 
 .recuadro{
   display: flex;
-  align-content: space-between;
+  align-content: flex-start;
   flex-wrap: wrap;
-  height: 5em;
+  height: 5.3em;
   background-color: #dedede;
   border-radius: 5px;
   overflow: hidden;
@@ -62,6 +62,7 @@ $verde: #4caf50;
   font-size: 40px !important;
   font-weight: bold;
   font-family: 'Ubuntu' !important;
+  padding-top: 0.2em;
 }
 
 .nombrerecuadro {
@@ -70,6 +71,8 @@ $verde: #4caf50;
   font-family: 'Ubuntu' !important;
   text-align: left;
   padding-left: 10px;
+  color: #000;
+  padding-top: 0.4em;
 }
 
 .preciorecuadro {
@@ -102,6 +105,7 @@ $verde: #4caf50;
   justify-content: space-around;
   align-content: space-between;
   flex-wrap: wrap;
+  padding-top: 0.2em;
 }
 
 .preciosmes div{
@@ -109,9 +113,14 @@ $verde: #4caf50;
 }
 
 .peq{
-  height: 3em;
+  height: 4em;
 }
 
 .gris {
   color: #666;
+}
+
+h1 {
+  font-size: 2.3em;
+  padding-top: 0.2em;
 }

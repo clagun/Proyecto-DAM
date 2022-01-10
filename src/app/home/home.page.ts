@@ -74,7 +74,7 @@ export class HomePage {
     var precioscomparar: Array<any>=[] ;
     var horascomparar: Array<any>=[]; 
     
-    if(this.textoDia == "Hoy"){
+    if(this.textoDia == "Mañana"){
       precioscomparar = this.precios;
       horascomparar= this.horas;
     }else{

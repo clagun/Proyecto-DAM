@@ -78,7 +78,7 @@ export class ChartsPage {
         scales: {
           y: {
             min: 0,
-            max: 500,
+            suggestedMax: 500,
             ticks: {
               color: '#333',
             },

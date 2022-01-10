@@ -15,7 +15,7 @@
 
   <div id="container">
     <h1>
-      Precios para el {{fecha}}
+      Precios para el <br> {{fecha | date:'d MMMM YYYY':'es'}}
     </h1>
     <div>
       <ion-button class="botonlista" [routerLink]="['/listado']">
@@ -24,7 +24,7 @@
       <ion-button class="botonlista" [routerLink]="['/charts']">
         <ion-icon name="analytics-outline" class="iconolista"></ion-icon> Mes
       </ion-button>
-      <ion-button *ngIf = "hora >= 21" class="botonlista" (click)= "cambiarFecha()">
+      <ion-button *ngIf="hora >= 21" class="botonlista" (click)="cambiarFecha()">
         <ion-icon name="calendar-outline" class="iconolista"></ion-icon> {{textoDia}}
       </ion-button>
     </div>

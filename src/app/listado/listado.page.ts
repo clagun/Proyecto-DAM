@@ -52,27 +52,48 @@ export class ListadoPage implements OnInit {
 
   //Realiza la subscripción al API y guarda los valores necesarios en los arrays y saca los min y max valores.
   GetAPILista() {
+    console.log("cambiar fecha es: " + this.apireeService.cambiarFecha)
+    if (this.apireeService.cambiarFecha == false ){
+      this.apireeService.GetAPI().subscribe(data => {
 
-   this.apireeService.GetAPI().subscribe(data => {
+        this.items = data.indicator.values;
+        for(let i = 0; i < data.indicator.values.length; i++) {
+   
+         this.precios.push(data.indicator.values[i].value / 1000);
+   
+        }
+   
+      this.preciosListado();
+   
+      });
+    } else {
+      this.apireeService.GetAPIDiaSiguiente().subscribe(data => {
 
-     this.items = data.indicator.values;
-     for(let i = 0; i < data.indicator.values.length; i++) {
+        this.items = data.indicator.values;
+        for(let i = 0; i < data.indicator.values.length; i++) {
+   
+         this.precios.push(data.indicator.values[i].value / 1000);
+   
+        }
+   
+      this.preciosListado();
+   
+      });
+    }
 
-      this.precios.push(data.indicator.values[i].value / 1000);
+  
+  }
 
-     }
+  private preciosListado() {
+    this.maxArr = Math.max.apply(Math, this.precios);
+    this.minArr = Math.min.apply(Math, this.precios);
 
-   this.maxArr = Math.max.apply(Math, this.precios);
-   this.minArr = Math.min.apply(Math, this.precios);
-
-   //si hay datos en el local storage, se ejecuta el método para conseguir del electrodoméstico seleccionado
-    if(localStorage.getItem('data')){
+    //si hay datos en el local storage, se ejecuta el método para conseguir del electrodoméstico seleccionado
+    if (localStorage.getItem('data')) {
       this.getPreciosListadoLocal();
-     } else {
+    } else {
       this.encabezadoElectro = "Precio kWh";
-     }
-
-   });
+    }
   }
 
   ngOnInit() {

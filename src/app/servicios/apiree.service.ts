@@ -40,14 +40,13 @@ export class ApireeService {
   //Devuelve la fecha del dia.
   FechaCorta(): Date {
     var fecha1=this.fechamostrar();
-    console.log("la fecha a mostrar es:"+fecha1)
     return fecha1;
   }
 
   fechamostrar(): Date {
     var fecha1=new Date();
-    if(this.cambiarFecha==true) {
-      fecha1.setDate(new Date().getDate()+1);
+    if(this.cambiarFecha == true) {
+      fecha1.setDate(new Date().getDate() + 1);
       return fecha1;
     } else {
       return fecha1;
@@ -57,7 +56,7 @@ export class ApireeService {
   obtenerFecha(): Date {
     this.fechaMostrar=new Date();
     if(new Date().getHours()>=21) {
-      this.fechaMostrar.setDate(this.fechaMostrar.getDate()+1);
+      this.fechaMostrar.setDate(this.fechaMostrar.getDate() +1);
       return this.fechaMostrar;
     }
     return this.fechaMostrar;
